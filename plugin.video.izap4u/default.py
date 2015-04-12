@@ -221,13 +221,15 @@ def add_dir(name, url, mode, iconimage):
         liz = xbmcgui.ListItem(name,
                                iconImage=thumbnailimage,
                                thumbnailImage=thumbnailimage)
-
+    try:
+        liz.setProperty("fanart_image",iconimage)
+    except:
+        fanartimage_temp = None
     liz.setInfo( 
                  type="Video", 
                  infoLabels={ "Title": name } 
                )
-    liz.setProperty('fanart_image', fanartimage)
-    ok  = xbmcplugin.addDirectoryItem( handle=int(sys.argv[1]), 
+    ok  = xbmcplugin.addDirectoryItem( handle=int(sys.argv[1]),
                                        url=url, 
                                        listitem=liz, 
                                        isFolder=True )
@@ -282,6 +284,6 @@ elif mode == MODE_10SEQUENCES_QUALITY and _id == 0:
     xbmc.log(msg=pluginLogHeader + "Retrieving 10sequences video quality",level=xbmc.LOGDEBUG)
     get10SequencesQualities(url)
 
-xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
-xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_DATE)
+#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
+#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_DATE)
 xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=True)
