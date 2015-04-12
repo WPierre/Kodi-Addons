@@ -2,7 +2,7 @@
 <addons>
 <addon id="plugin.video.izap4u"
        name="iZap4u Kodi"
-       version="0.1.1"
+       version="0.1.2"
        provider-name="WPierre">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>

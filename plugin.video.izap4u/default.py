@@ -182,7 +182,7 @@ def get_params():
 
 def addlink(url):
     xbmc.log(msg=pluginLogHeader + "Added video link "+url,level=xbmc.LOGDEBUG)
-    liz = xbmcgui.ListItem(url)
+    liz = xbmcgui.ListItem(urllib2.unquote(os.path.splitext(basename(url))[0]))
     liz.setInfo(
                  type="Video",
                  infoLabels={ "title": urllib2.unquote(os.path.splitext(basename(url))[0]),
