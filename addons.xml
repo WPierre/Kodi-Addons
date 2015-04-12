@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+<addon id="plugin.video.izap4u"
+       name="iZap4u Kodi"
+       version="0.1.0"
+       provider-name="WPierre">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+             library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <minversion>29000</minversion>
+    <language>fr</language>
+    <summary>iZap4u Video plugin (unofficial)</summary>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 1997</license>
+    <website>http://www.izap4u.com</website>
+    <description lang="fr">Ce plugin permet d'accéder aux vidéos du site iZap4u. Ce plugin n'est pas développé par l'équipe d'iZap4u. Si vous aimez les zaps, pensez à faire un don aux auteurs du site http://www.izap4u.com !
+    </description>
+    <description lang="en">This plugin allows to access the video from the iZap4u website. This add-on isn't made by the iZap4u team. If you like the zaps, consider making a donation to the http://www.izap4u.com authors !
+    </description>
+    <disclaimer lang="fr">Ce plugin est fourni "en l'état" et présente moins de fonctionnalités que le site web.</disclaimer>
+    <disclaimer lang="en">This plugin is provided "as-is" et has less functions than the website..</disclaimer>
+  </extension>
+</addon>
+
+<addon id="repository.wpierre" name="Kodi WPierre Addons" version="1.0.0" provider-name="kodi-wpierre">
+	<extension point="xbmc.addon.repository" name="Kodi WPierre repository">
+		<info compressed="false">https://raw.githubusercontent.com/WPierre/Kodi-Addons/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/WPierre/Kodi-Addons/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/WPierre/Kodi-Addons/master</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Kodi WPierre Addons</summary>
+		<description>Some Kodi Addons</description>
+		<disclaimer>The owners and submitters to this repository do not host or distribute any of the content displayed by these addons nor do they have any affiliation with the content providers.</disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+</addons>

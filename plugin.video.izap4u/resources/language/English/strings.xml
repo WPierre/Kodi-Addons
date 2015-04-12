@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <!-- Parameters -->
+    <string id="30001">Zaps</string>
+    <string id="30003">10 Sequences</string>
+    <string id="30004">Choose your quality</string>
+    
+    <!-- Error messages -->
+    <string id="30017">There has been an error</string>
+</strings>

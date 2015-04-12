@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.wpierre" name="Kodi WPierre Addons" version="1.0.0" provider-name="kodi-wpierre">
+	<extension point="xbmc.addon.repository" name="Kodi WPierre repository">
+		<info compressed="false">https://raw.githubusercontent.com/WPierre/Kodi-Addons/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/WPierre/Kodi-Addons/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/WPierre/Kodi-Addons/master</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Kodi WPierre Addons</summary>
+		<description>Some Kodi Addons</description>
+		<disclaimer>The owners and submitters to this repository do not host or distribute any of the content displayed by these addons nor do they have any affiliation with the content providers.</disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
