@@ -40,12 +40,15 @@ class loginExpcetion(Exception):
 pluginLogHeader = "[KODI_iZap4u] "
 
 ## Values for the mode parameter
-MODE_LAST_SHOWS, MODE_CATEGORIES, MODE_SEARCH, MODE_SHOW_BY_URL, MODE_LINKS = range(5)
 MODE_ZAPS_LIST = 1
 MODE_10SEQUENCES_LIST = 2
 MODE_ZAP_QUALITY = 3
 MODE_10SEQUENCES_QUALITY = 4
 MODE_SEARCH = 5
+MODE_HOMEMADE_LIST = 6
+MODE_10SECONDS_LIST = 7
+MODE_HOMEMADE_QUALITY = 8
+MODE_10SECONDS_QUALITY = 9
 
 settings  = xbmcaddon.Addon(id='plugin.video.izap4u')
 website_url = "http://www.izap4u.com"
@@ -95,7 +98,8 @@ def getZaps():
         return
     for video in liens:
         if video['href'].find("/zap/") != -1:
-            add_dir(video['title'],video['href'], MODE_ZAP_QUALITY,video.find('img')['data-original'])
+            #add_dir(video['title'],video['href'], MODE_ZAP_QUALITY,video.find('img')['data-original'])
+            add_dir(video['title'],video['href'], MODE_ZAP_QUALITY,video.find('img')['src'])
 
 def getZapQualities(url):
     xbmc.log(msg=pluginLogHeader + "Getting qualities for zap "+url,level=xbmc.LOGDEBUG)
@@ -129,10 +133,78 @@ def get10Sequences():
         return
     for video in liens:
         if video['href'].find("/10sequences/") != -1:
-            add_dir(video['title'],video['href'], MODE_10SEQUENCES_QUALITY,video.find('img')['data-original'])
+            add_dir(video['title'],video['href'], MODE_10SEQUENCES_QUALITY,video.find('img')['src'])
 
 def get10SequencesQualities(url):
     xbmc.log(msg=pluginLogHeader + "Getting qualities for zap "+url,level=xbmc.LOGDEBUG)
+
+    server_url = urllib2.urlopen(url)
+    html = server_url.read()
+    liens = re.findall(r'file: "(.*\.mp4)"', html)
+    liens = list(set(liens))
+    try:
+        for video in liens:
+            addlink(video)
+    except:
+        Error_message(30017)
+        xbmc.log(msg=pluginLogHeader + 'Exception (init): ' + str(sys.exc_info()),level=xbmc.LOGFATAL)
+        return
+
+def get10Seconds():
+    xbmc.log(msg=pluginLogHeader + "Getting 10 seconds",level=xbmc.LOGDEBUG)
+    settings = xbmcaddon.Addon(id='plugin.video.izap4u')
+
+    try:
+        server_url = urllib2.urlopen(website_url)
+        soup = BeautifulSoup(server_url.read())
+        #xbmc.log(msg=pluginLogHeader + "Soup:"+soup.prettify(),level=xbmc.LOGDEBUG)
+
+        server_url.close()
+        liens = soup.findAll('a',{"class":'thumbzap'})
+    except:
+        Error_message(30017)
+        xbmc.log(msg=pluginLogHeader + 'Exception (init): ' + str(sys.exc_info()),level=xbmc.LOGFATAL)
+        return
+    for video in liens:
+        if video['href'].find("/10seconds/") != -1:
+            add_dir(video['title'],video['href'], MODE_10SECONDS_QUALITY,video.find('img')['src'])
+
+def get10SecondsQualities(url):
+    xbmc.log(msg=pluginLogHeader + "Getting qualities for 10seconds "+url,level=xbmc.LOGDEBUG)
+
+    server_url = urllib2.urlopen(url)
+    html = server_url.read()
+    liens = re.findall(r'file: "(.*\.mp4)"', html)
+    liens = list(set(liens))
+    try:
+        for video in liens:
+            addlink(video)
+    except:
+        Error_message(30017)
+        xbmc.log(msg=pluginLogHeader + 'Exception (init): ' + str(sys.exc_info()),level=xbmc.LOGFATAL)
+        return
+
+def getHomeMades():
+    xbmc.log(msg=pluginLogHeader + "Getting Homemade",level=xbmc.LOGDEBUG)
+    settings = xbmcaddon.Addon(id='plugin.video.izap4u')
+
+    try:
+        server_url = urllib2.urlopen(website_url)
+        soup = BeautifulSoup(server_url.read())
+        #xbmc.log(msg=pluginLogHeader + "Soup:"+soup.prettify(),level=xbmc.LOGDEBUG)
+
+        server_url.close()
+        liens = soup.findAll('a',{"class":'thumbzap'})
+    except:
+        Error_message(30017)
+        xbmc.log(msg=pluginLogHeader + 'Exception (init): ' + str(sys.exc_info()),level=xbmc.LOGFATAL)
+        return
+    for video in liens:
+        if video['href'].find("/homemade/") != -1:
+            add_dir(video['title'],video['href'], MODE_HOMEMADE_QUALITY,video.find('img')['src'])
+
+def getHomeMadesQualities(url):
+    xbmc.log(msg=pluginLogHeader + "Getting qualities for homemade "+url,level=xbmc.LOGDEBUG)
 
     server_url = urllib2.urlopen(url)
     html = server_url.read()
@@ -154,6 +226,8 @@ def initialIndex():
     """
     add_dir(unicode(language(30001)), '', MODE_ZAPS_LIST, '')
     add_dir(unicode(language(30003)), '', MODE_10SEQUENCES_LIST, '')
+    add_dir(unicode(language(30006)), '', MODE_HOMEMADE_LIST, '')
+    add_dir(unicode(language(30005)), '', MODE_10SECONDS_LIST, '')
 
 
 def get_params():
@@ -283,6 +357,19 @@ elif mode == MODE_10SEQUENCES_LIST and _id == 0:
 elif mode == MODE_10SEQUENCES_QUALITY and _id == 0:
     xbmc.log(msg=pluginLogHeader + "Retrieving 10sequences video quality",level=xbmc.LOGDEBUG)
     get10SequencesQualities(url)
+elif mode == MODE_HOMEMADE_LIST and _id == 0:
+    xbmc.log(msg=pluginLogHeader + "Retrieving homemade list",level=xbmc.LOGDEBUG)
+    getHomeMades()
+elif mode == MODE_HOMEMADE_QUALITY and _id == 0:
+    xbmc.log(msg=pluginLogHeader + "Retrieving homemade video quality",level=xbmc.LOGDEBUG)
+    getHomeMadesQualities(url)
+elif mode == MODE_10SECONDS_LIST and _id == 0:
+    xbmc.log(msg=pluginLogHeader + "Retrieving 10seconds list",level=xbmc.LOGDEBUG)
+    get10Seconds()
+elif mode == MODE_10SECONDS_QUALITY and _id == 0:
+    xbmc.log(msg=pluginLogHeader + "Retrieving 10seconds video quality",level=xbmc.LOGDEBUG)
+    get10SecondsQualities(url)
+
 
 #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
 #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_DATE)

@@ -4,7 +4,9 @@
     <string id="30001">Zaps</string>
     <string id="30003">10 Sequences</string>
     <string id="30004">Choisissez votre qualité</string>
-    
+    <string id="30005">10 Seconds</string>
+    <string id="30006">Homemade</string>
+
     <!-- Error messages -->
     <string id="30017">Il y a eu une erreur</string>
 </strings>
